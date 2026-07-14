@@ -46,7 +46,7 @@ const COPY = {
     bookCta: "Book a consultation",
     themeToggle: { light: "Dusk", dark: "Day" },
     langToggle: "عربي",
-    heroTag: "Dubai, U.A.E. · RERA BRN [add number]",
+    heroTag: "Dubai, U.A.E.",
     heroLines: ["Property is", "structural", "before it is"],
     heroAccent: "beautiful.",
     heroBody:
