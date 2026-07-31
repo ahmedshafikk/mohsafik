@@ -112,7 +112,7 @@ export function BlogForm({
         />
       </Field>
       <Field label="Cover image">
-        <ImageUploader onUploaded={(urls) => set({ coverImage: urls[0] })} />
+        <ImageUploader onUploaded={(urls) => set({ coverImage: urls[0] ?? "" })} />
       </Field>
       {value.coverImage && (
         <img src={value.coverImage} alt="" className="h-32 w-full object-cover" />
@@ -122,7 +122,7 @@ export function BlogForm({
           <select
             className={inputClass}
             value={value.status ?? "draft"}
-            onChange={(e) => set({ status: e.target.value as BlogPost["status"] })}
+            onChange={(e) => set({ status: e.target.value as "draft" | "published" })}
           >
             <option value="draft">draft</option>
             <option value="published">published</option>
@@ -207,7 +207,7 @@ export function ListingForm({
           <select
             className={inputClass}
             value={value.status ?? "available"}
-            onChange={(e) => set({ status: e.target.value as Listing["status"] })}
+            onChange={(e) => set({ status: e.target.value as NonNullable<Listing["status"]> })}
           >
             {["draft", "available", "reserved", "sold"].map((s) => (
               <option key={s} value={s}>
