@@ -19,6 +19,17 @@
  */
 
 @theme inline {
+  --font-display: "Bodoni Moda", "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-sans: "Karla", system-ui, sans-serif;
+  --color-limestone: var(--limestone);
+  --color-limestone-deep: var(--limestone-deep);
+  --color-petrol: var(--petrol);
+  --color-petrol-deep: var(--petrol-deep);
+  --color-petrol-light: var(--petrol-light);
+  --color-brass: var(--brass);
+  --color-brass-light: var(--brass-light);
+  --color-ink: var(--ink);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -62,39 +73,49 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  /* Brand primitives — swap these hex-derived oklch values when exact codes arrive */
+  --limestone: oklch(0.968 0.009 84.6); /* #F7F4EE */
+  --limestone-deep: oklch(0.932 0.013 82.4); /* #EDE8DF */
+  --petrol: oklch(0.326 0.049 211.9); /* #0E3B43 */
+  --petrol-deep: oklch(0.268 0.039 211.9); /* #0A2B31 */
+  --petrol-light: oklch(0.412 0.064 211.8); /* #14545F */
+  --brass: oklch(0.664 0.083 77.4); /* #B08D57 */
+  --brass-light: oklch(0.749 0.09 83.5); /* #C9A96A */
+  --ink: oklch(0.207 0.008 67.4); /* #1A1714 */
+
+  --radius: 0.125rem;
+  --background: var(--limestone);
+  --foreground: var(--ink);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
+  --card-foreground: var(--ink);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
+  --popover-foreground: var(--ink);
+  --primary: var(--petrol);
+  --primary-foreground: var(--limestone);
+  --secondary: var(--limestone-deep);
+  --secondary-foreground: var(--petrol);
+  --muted: var(--limestone-deep);
+  --muted-foreground: oklch(0.617 0.02 89.4);
+  --accent: var(--brass);
+  --accent-foreground: var(--petrol-deep);
+  --destructive: oklch(0.505 0.19 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --border: oklch(0.881 0.02 84.6);
+  --input: oklch(0.881 0.02 84.6);
+  --ring: var(--brass);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
   --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--petrol);
+  --sidebar-primary-foreground: var(--limestone);
+  --sidebar-accent: var(--limestone-deep);
+  --sidebar-accent-foreground: var(--petrol);
+  --sidebar-border: oklch(0.881 0.02 84.6);
+  --sidebar-ring: var(--brass);
 }
 
 .dark {
@@ -140,5 +161,71 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+  }
+}
+
+/* ---- Drafting language utilities ---- */
+
+@utility draft-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--petrol) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--petrol) 8%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+@utility label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+@utility rule-tick {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background: color-mix(in oklab, var(--brass) 70%, transparent);
+  }
+}
+
+@utility display-xl {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
+
+@keyframes draw-line {
+  from {
+    stroke-dashoffset: var(--dash, 1200);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@utility elevation-draw {
+  & path,
+  & line,
+  & rect,
+  & circle,
+  & polyline {
+    stroke-dasharray: var(--dash, 1200);
+    animation: draw-line 3s ease-out forwards;
   }
 }
