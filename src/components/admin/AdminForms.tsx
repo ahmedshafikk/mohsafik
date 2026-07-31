@@ -246,6 +246,24 @@ export function ListingForm({
             onChange={(e) => set({ reference: e.target.value })}
           />
         </Field>
+        <Field label="External link (tour / portal)">
+          <input
+            type="url"
+            placeholder="https://"
+            className={inputClass}
+            value={value.link ?? ""}
+            onChange={(e) => set({ link: e.target.value })}
+          />
+        </Field>
+        <Field label="Brochure / dossier link">
+          <input
+            type="url"
+            placeholder="https://"
+            className={inputClass}
+            value={value.brochureUrl ?? ""}
+            onChange={(e) => set({ brochureUrl: e.target.value })}
+          />
+        </Field>
       </div>
       <Field label="Description">
         <textarea
