@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Elevation } from "@/components/site/Elevation";
-import heroImage from "@/assets/hero-villa.jpg";
+import portraitAsset from "@/assets/mohamed-shafik-portrait.png.asset.json";
 import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/")({
@@ -90,16 +90,16 @@ function Index() {
           </div>
 
           <div className="lg:col-span-6">
-            <div className="relative">
+            <div className="relative border border-brass/60 p-1">
               <img
-                src={heroImage}
-                alt="Ultra-prime Dubai villa elevation at dusk with limestone fins and reflecting pool"
-                width={1920}
-                height={1280}
-                className="h-[420px] w-full object-cover md:h-[600px]"
+                src={portraitAsset.url}
+                alt="Mohamed Shafik, Dubai ultra-prime real estate advisor, speaking at an industry panel"
+                width={1200}
+                height={1500}
+                className="h-[420px] w-full object-cover object-top grayscale md:h-[600px]"
               />
-              <div className="absolute -bottom-px left-0 border-t border-r border-brass bg-background px-5 py-3">
-                <p className="label-mono text-muted-foreground">Plate 01 — Emirates Hills</p>
+              <div className="absolute bottom-1 right-1 border-t border-l border-brass bg-background px-5 py-3">
+                <p className="label-mono text-muted-foreground">Mohamed Shafik</p>
               </div>
             </div>
           </div>

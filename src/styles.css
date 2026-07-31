@@ -19,7 +19,7 @@
  */
 
 @theme inline {
-  --font-display: "Bodoni Moda", "Times New Roman", serif;
+  --font-display: "Karla", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   --font-sans: "Karla", system-ui, sans-serif;
   --color-limestone: var(--limestone);
