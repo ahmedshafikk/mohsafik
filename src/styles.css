@@ -19,6 +19,17 @@
  */
 
 @theme inline {
+  --font-display: "Bodoni Moda", "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-sans: "Karla", system-ui, sans-serif;
+  --color-limestone: var(--limestone);
+  --color-limestone-deep: var(--limestone-deep);
+  --color-petrol: var(--petrol);
+  --color-petrol-deep: var(--petrol-deep);
+  --color-petrol-light: var(--petrol-light);
+  --color-brass: var(--brass);
+  --color-brass-light: var(--brass-light);
+  --color-ink: var(--ink);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
