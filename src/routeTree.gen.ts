@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as ListingsIndexRouteImport } from './routes/listings.index'
@@ -18,6 +19,11 @@ import { Route as ListingsIdRouteImport } from './routes/listings.$id'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
@@ -43,6 +49,7 @@ const ListingsIdRoute = ListingsIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/listings/$id': typeof ListingsIdRoute
   '/blog/': typeof BlogIndexRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/listings/$id': typeof ListingsIdRoute
   '/blog': typeof BlogIndexRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/listings/$id': typeof ListingsIdRoute
   '/blog/': typeof BlogIndexRoute
@@ -65,15 +74,23 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/blog/$slug' | '/listings/$id' | '/blog/' | '/listings/'
+  fullPaths:
+    '/' | '/admin' | '/blog/$slug' | '/listings/$id' | '/blog/' | '/listings/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/blog/$slug' | '/listings/$id' | '/blog' | '/listings'
+  to: '/' | '/admin' | '/blog/$slug' | '/listings/$id' | '/blog' | '/listings'
   id:
-    '__root__' | '/' | '/blog/$slug' | '/listings/$id' | '/blog/' | '/listings/'
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/blog/$slug'
+    | '/listings/$id'
+    | '/blog/'
+    | '/listings/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   BlogSlugRoute: typeof BlogSlugRoute
   ListingsIdRoute: typeof ListingsIdRoute
   BlogIndexRoute: typeof BlogIndexRoute
@@ -87,6 +104,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/': {
@@ -122,6 +146,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   BlogSlugRoute: BlogSlugRoute,
   ListingsIdRoute: ListingsIdRoute,
   BlogIndexRoute: BlogIndexRoute,
@@ -130,3 +155,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
