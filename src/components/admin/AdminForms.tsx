@@ -61,12 +61,14 @@ export function BlogForm({
   onSubmit,
   onCancel,
   saving,
+  onPublish,
 }: {
   value: Partial<BlogPost>;
   onChange: (v: Partial<BlogPost>) => void;
   onSubmit: () => void;
   onCancel: () => void;
   saving: boolean;
+  onPublish?: () => void;
 }) {
   const set = (patch: Partial<BlogPost>) => onChange({ ...value, ...patch });
 
@@ -76,7 +78,7 @@ export function BlogForm({
         e.preventDefault();
         onSubmit();
       }}
-      className="space-y-5 border border-border bg-background p-6"
+      className="space-y-5 border border-border bg-card p-6"
     >
       <p className="label-mono text-brass">{value.id ? "Edit entry" : "New entry"}</p>
       <Field label="Title">
@@ -137,7 +139,7 @@ export function BlogForm({
           />
         </Field>
       </div>
-      <FormActions saving={saving} onCancel={onCancel} />
+      <FormActions saving={saving} onCancel={onCancel} onPublish={onPublish} publishLabel="Publish entry" />
     </form>
   );
 }
@@ -148,12 +150,14 @@ export function ListingForm({
   onSubmit,
   onCancel,
   saving,
+  onPublish,
 }: {
   value: Partial<Listing>;
   onChange: (v: Partial<Listing>) => void;
   onSubmit: () => void;
   onCancel: () => void;
   saving: boolean;
+  onPublish?: () => void;
 }) {
   const set = (patch: Partial<Listing>) => onChange({ ...value, ...patch });
   const images = value.images ?? [];
@@ -164,7 +168,7 @@ export function ListingForm({
         e.preventDefault();
         onSubmit();
       }}
-      className="space-y-5 border border-border bg-background p-6"
+      className="space-y-5 border border-border bg-card p-6"
     >
       <p className="label-mono text-brass">{value.id ? "Edit listing" : "New listing"}</p>
       <Field label="Title">
@@ -294,25 +298,45 @@ export function ListingForm({
           ))}
         </div>
       )}
-      <FormActions saving={saving} onCancel={onCancel} />
+      <FormActions saving={saving} onCancel={onCancel} onPublish={onPublish} publishLabel="Publish listing" />
     </form>
   );
 }
 
-function FormActions({ saving, onCancel }: { saving: boolean; onCancel: () => void }) {
+function FormActions({
+  saving,
+  onCancel,
+  onPublish,
+  publishLabel,
+}: {
+  saving: boolean;
+  onCancel: () => void;
+  onPublish?: (() => void) | undefined;
+  publishLabel?: string;
+}) {
   return (
-    <div className="flex gap-3 border-t border-border pt-5">
+    <div className="flex flex-wrap gap-3 border-t border-border pt-5">
       <button
         type="submit"
         disabled={saving}
-        className="label-mono bg-primary px-6 py-3 text-primary-foreground transition-colors hover:bg-petrol-light disabled:opacity-50"
+        className="label-mono border border-border px-6 py-3 text-primary transition-colors hover:bg-secondary disabled:opacity-50"
       >
-        {saving ? "Saving…" : "Save"}
+        {saving ? "Saving…" : "Save draft"}
       </button>
+      {onPublish && (
+        <button
+          type="button"
+          disabled={saving}
+          onClick={onPublish}
+          className="label-mono bg-brass px-6 py-3 text-accent-foreground transition-colors hover:bg-brass-light disabled:opacity-50"
+        >
+          {publishLabel ?? "Publish"}
+        </button>
+      )}
       <button
         type="button"
         onClick={onCancel}
-        className="label-mono border border-border px-6 py-3 text-primary transition-colors hover:bg-secondary"
+        className="label-mono px-6 py-3 text-muted-foreground transition-colors hover:text-primary"
       >
         Cancel
       </button>
