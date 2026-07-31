@@ -1,25 +1,56 @@
 import { Link } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Moon, Sun } from "lucide-react";
+import { useTheme } from "@/lib/theme";
+import { useI18n, type TKey } from "@/lib/i18n";
 
 const nav = [
-  { to: "/", label: "Index" },
-  { to: "/listings", label: "Portfolio" },
-  { to: "/blog", label: "Journal" },
-] as const;
+  { to: "/", key: "nav.index" as TKey },
+  { to: "/listings", key: "nav.portfolio" as TKey },
+  { to: "/blog", key: "nav.journal" as TKey },
+];
+
+function Controls() {
+  const { theme, toggle } = useTheme();
+  const { t, toggle: toggleLang } = useI18n();
+  return (
+    <div className="flex items-center gap-2">
+      <button
+        type="button"
+        onClick={toggle}
+        aria-label="Toggle color theme"
+        className="label-mono flex items-center gap-2 rounded-full border border-brass px-4 py-2 text-brass transition-colors hover:bg-brass hover:text-accent-foreground"
+      >
+        {theme === "dark" ? <Moon className="size-3" /> : <Sun className="size-3" />}
+        {theme === "dark" ? t("theme.dark") : t("theme.light")}
+      </button>
+      <button
+        type="button"
+        onClick={toggleLang}
+        aria-label="Switch language"
+        className="label-mono rounded-full border border-brass px-4 py-2 text-brass transition-colors hover:bg-brass hover:text-accent-foreground"
+      >
+        {t("lang.toggle")}
+      </button>
+    </div>
+  );
+}
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const { t } = useI18n();
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur">
       <div className="mx-auto flex max-w-[88rem] items-center justify-between px-6 py-4 lg:px-10">
         <Link to="/" className="group flex items-baseline gap-3">
-          <span className="font-display text-lg tracking-tight text-primary">Mohamed Shafik</span>
-          <span className="label-mono hidden text-muted-foreground sm:inline">Dubai / Ultra-Prime</span>
+          <span className="font-display text-lg tracking-tight text-primary">
+            Mohamed Shafik<span className="text-brass">.</span>
+          </span>
+          <span className="label-mono hidden text-muted-foreground sm:inline">{t("brand.tagline")}</span>
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-6 md:flex">
           {nav.map((item) => (
             <Link
               key={item.to}
@@ -28,25 +59,29 @@ export function SiteHeader() {
               className="label-mono text-muted-foreground transition-colors hover:text-primary"
               activeProps={{ className: "label-mono text-primary" }}
             >
-              {item.label}
+              {t(item.key)}
             </Link>
           ))}
+          <Controls />
           <a
             href="mailto:advisory@mohamedshafik.ae"
-            className="label-mono border border-primary bg-primary px-4 py-2 text-primary-foreground transition-colors hover:bg-petrol-light"
+            className="label-mono border border-brass bg-brass px-4 py-2 text-accent-foreground transition-colors hover:bg-brass-light"
           >
-            Private Consultation
+            {t("nav.consultation")}
           </a>
         </nav>
 
-        <button
-          type="button"
-          aria-label="Toggle navigation"
-          onClick={() => setOpen((v) => !v)}
-          className="border border-border p-2 text-primary md:hidden"
-        >
-          {open ? <X className="size-4" /> : <Menu className="size-4" />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <Controls />
+          <button
+            type="button"
+            aria-label="Toggle navigation"
+            onClick={() => setOpen((v) => !v)}
+            className="border border-border p-2 text-primary"
+          >
+            {open ? <X className="size-4" /> : <Menu className="size-4" />}
+          </button>
+        </div>
       </div>
 
       {open && (
@@ -58,14 +93,14 @@ export function SiteHeader() {
               onClick={() => setOpen(false)}
               className="label-mono block border-b border-border py-3 text-primary"
             >
-              {item.label}
+              {t(item.key)}
             </Link>
           ))}
           <a
             href="mailto:advisory@mohamedshafik.ae"
-            className="label-mono mt-4 block bg-primary px-4 py-3 text-center text-primary-foreground"
+            className="label-mono mt-4 block bg-brass px-4 py-3 text-center text-accent-foreground"
           >
-            Private Consultation
+            {t("nav.consultation")}
           </a>
         </nav>
       )}
@@ -74,30 +109,31 @@ export function SiteHeader() {
 }
 
 export function SiteFooter() {
+  const { t } = useI18n();
   return (
     <footer className="border-t border-border bg-petrol-deep text-limestone">
       <div className="mx-auto grid max-w-[88rem] gap-10 px-6 py-16 md:grid-cols-3 lg:px-10">
         <div>
-          <p className="font-display text-2xl">Mohamed Shafik</p>
-          <p className="label-mono mt-3 text-brass-light">Civil Engineer / Prime Advisory</p>
-          <p className="mt-4 max-w-xs text-sm text-limestone/70">
-            Structural due diligence and discreet representation across Dubai's ultra-prime market.
+          <p className="font-display text-2xl">
+            Mohamed Shafik<span className="text-brass">.</span>
           </p>
+          <p className="label-mono mt-3 text-brass-light">{t("brand.role")}</p>
+          <p className="mt-4 max-w-xs text-sm text-limestone/70">{t("footer.blurb")}</p>
         </div>
         <div>
-          <p className="label-mono text-brass-light">Navigate</p>
+          <p className="label-mono text-brass-light">{t("nav.navigate")}</p>
           <ul className="mt-4 space-y-2 text-sm">
             {nav.map((item) => (
               <li key={item.to}>
                 <Link to={item.to} className="text-limestone/80 transition-colors hover:text-brass-light">
-                  {item.label}
+                  {t(item.key)}
                 </Link>
               </li>
             ))}
           </ul>
         </div>
         <div>
-          <p className="label-mono text-brass-light">Contact</p>
+          <p className="label-mono text-brass-light">{t("nav.contact")}</p>
           <ul className="mt-4 space-y-2 text-sm text-limestone/80">
             <li>advisory@mohamedshafik.ae</li>
             <li>+971 4 000 0000</li>
@@ -107,7 +143,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-limestone/10 px-6 py-6 lg:px-10">
         <p className="label-mono mx-auto max-w-[88rem] text-limestone/50">
-          © {new Date().getFullYear()} Mohamed Shafik — All rights reserved
+          © {new Date().getFullYear()} Mohamed Shafik — {t("footer.rights")}
         </p>
       </div>
     </footer>

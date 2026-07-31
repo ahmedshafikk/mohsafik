@@ -119,10 +119,30 @@ function ListingDetail() {
           </div>
           <a
             href={`mailto:advisory@mohamedshafik.ae?subject=${encodeURIComponent(`Enquiry — ${listing.title}`)}`}
-            className="label-mono mt-6 block bg-primary px-6 py-5 text-center text-primary-foreground transition-colors hover:bg-petrol-light"
+            className="label-mono mt-6 block bg-brass px-6 py-5 text-center text-accent-foreground transition-colors hover:bg-brass-light"
           >
             Request full dossier
           </a>
+          {listing.brochureUrl && (
+            <a
+              href={listing.brochureUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="label-mono mt-3 block border border-border px-6 py-5 text-center text-primary transition-colors hover:bg-secondary"
+            >
+              Download brochure
+            </a>
+          )}
+          {listing.link && (
+            <a
+              href={listing.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="label-mono mt-3 block border border-border px-6 py-5 text-center text-primary transition-colors hover:bg-secondary"
+            >
+              External listing / tour
+            </a>
+          )}
         </aside>
       </section>
     </SiteLayout>

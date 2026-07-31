@@ -23,6 +23,8 @@ export type Listing = {
   area?: string;
   reference?: string;
   images?: string[];
+  link?: string;
+  brochureUrl?: string;
   status?: "available" | "reserved" | "sold" | "draft";
 };
 

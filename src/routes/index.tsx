@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Elevation } from "@/components/site/Elevation";
 import heroImage from "@/assets/hero-villa.jpg";
+import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -55,39 +56,37 @@ const process = [
 ];
 
 function Index() {
+  const { t } = useI18n();
   return (
     <SiteLayout>
       {/* Hero */}
       <section className="relative border-b border-border">
         <div className="mx-auto grid max-w-[88rem] gap-10 px-6 pb-16 pt-16 lg:grid-cols-12 lg:gap-6 lg:px-10 lg:pb-24 lg:pt-24">
           <div className="lg:col-span-6">
-            <p className="label-mono text-brass">Dubai / Ultra-Prime / Est. 2014</p>
+            <p className="label-mono text-brass">{t("hero.eyebrow")}</p>
             <h1 className="display-xl mt-6 text-6xl text-primary md:text-8xl">
-              Real estate
+              {t("hero.line1")}
               <br />
-              read as
+              {t("hero.line2")}
               <br />
-              <em className="italic text-brass">structure.</em>
+              <em className="italic text-brass">{t("hero.line3")}</em>
             </h1>
-            <p className="mt-8 max-w-md text-base leading-relaxed text-muted-foreground">
-              A civil engineer advising private clients on Dubai's most consequential residential and
-              development assets. Drawings, tolerances and load paths — before price.
-            </p>
+            <p className="mt-8 max-w-md text-base leading-relaxed text-muted-foreground">{t("hero.body")}</p>
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Link
                 to="/listings"
-                className="label-mono border border-primary bg-primary px-6 py-4 text-primary-foreground transition-colors hover:bg-petrol-light"
+                className="label-mono border border-brass bg-brass px-6 py-4 text-accent-foreground transition-colors hover:bg-brass-light"
               >
-                View Portfolio
+                {t("hero.cta1")}
               </Link>
               <a
                 href="mailto:advisory@mohamedshafik.ae"
-                className="label-mono border border-primary px-6 py-4 text-primary transition-colors hover:bg-secondary"
+                className="label-mono border border-border px-6 py-4 text-primary transition-colors hover:bg-secondary"
               >
-                Request Dossier
+                {t("hero.cta2")}
               </a>
             </div>
-            <Elevation className="mt-14 hidden h-40 w-full max-w-md text-petrol/50 lg:block" />
+            <Elevation className="mt-14 hidden h-40 w-full max-w-md text-brass/40 lg:block" />
           </div>
 
           <div className="lg:col-span-6">
