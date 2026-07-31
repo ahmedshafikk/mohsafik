@@ -131,7 +131,7 @@ export function PageHeader({
 }: {
   index: string;
   title: string;
-  description?: string;
+  description?: string | undefined;
 }) {
   return (
     <section className="draft-grid border-b border-border">
