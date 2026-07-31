@@ -31,11 +31,9 @@ export async function api<T>(path: string, { method = "GET", body, auth }: Optio
     if (token) headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const res = await fetch(`${API_BASE}${path}`, {
-    method,
-    headers,
-    body: body === undefined ? undefined : JSON.stringify(body),
-  });
+  const init: RequestInit = { method, headers };
+  if (body !== undefined) init.body = JSON.stringify(body);
+  const res = await fetch(`${API_BASE}${path}`, init);
 
   if (!res.ok) {
     const text = await res.text().catch(() => "");
@@ -50,11 +48,9 @@ export async function uploadImage(file: File): Promise<string> {
   const form = new FormData();
   form.append("file", file);
   const token = getToken();
-  const res = await fetch(`${API_BASE}/api/upload`, {
-    method: "POST",
-    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
-    body: form,
-  });
+  const init: RequestInit = { method: "POST", body: form };
+  if (token) init.headers = { Authorization: `Bearer ${token}` };
+  const res = await fetch(`${API_BASE}/api/upload`, init);
   if (!res.ok) throw new Error(`Upload failed (${res.status})`);
   const data = (await res.json()) as { url?: string; location?: string };
   const url = data.url ?? data.location;
