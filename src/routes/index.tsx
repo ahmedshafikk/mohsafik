@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Elevation } from "@/components/site/Elevation";
-import portraitAsset from "@/assets/mohamed-shafik-portrait.png.asset.json";
 import { useI18n } from "@/lib/i18n";
 
 export const Route = createFileRoute("/")({
@@ -92,7 +91,7 @@ function Index() {
           <div className="lg:col-span-6">
             <div className="relative border border-brass/60 p-1">
               <img
-                src={portraitAsset.url}
+                src="/mohamed-shafik-portrait.png"
                 alt="Mohamed Shafik, Dubai ultra-prime real estate advisor, speaking at an industry panel"
                 width={1200}
                 height={1500}
