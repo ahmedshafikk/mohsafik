@@ -118,7 +118,9 @@ function ListingDetail() {
             </dl>
           </div>
           <a
-            href={`mailto:advisory@mohamedshafik.ae?subject=${encodeURIComponent(`Enquiry — ${listing.title}`)}`}
+            href={`https://wa.me/971527242994?text=${encodeURIComponent(`Hello, I'd like to request the full dossier for: ${listing.title}`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="label-mono mt-6 block bg-brass px-6 py-5 text-center text-accent-foreground transition-colors hover:bg-brass-light"
           >
             Request full dossier

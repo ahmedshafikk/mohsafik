@@ -79,7 +79,9 @@ function Index() {
                 {t("hero.cta1")}
               </Link>
               <a
-                href="mailto:advisory@mohamedshafik.ae"
+                href="https://wa.me/971527242994?text=Hello%2C%20I%27d%20like%20to%20request%20a%20full%20dossier"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="label-mono border border-border px-6 py-4 text-primary transition-colors hover:bg-secondary"
               >
                 {t("hero.cta2")}

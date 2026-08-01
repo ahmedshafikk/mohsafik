@@ -136,7 +136,11 @@ export function SiteFooter() {
           <p className="label-mono text-brass-light">{t("nav.contact")}</p>
           <ul className="mt-4 space-y-2 text-sm text-limestone/80">
             <li>advisory@mohamedshafik.ae</li>
-            <li>+971 4 000 0000</li>
+            <li>
+              <a href="https://wa.me/971527242994" target="_blank" rel="noopener noreferrer" className="hover:text-brass transition-colors">
+                +971 52 724 2994
+              </a>
+            </li>
             <li>DIFC, Dubai, UAE</li>
           </ul>
         </div>
